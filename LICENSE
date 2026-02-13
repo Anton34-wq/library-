@@ -1,21 +1,1246 @@
-MIT License
+npx create-next-app@latest ufc-fighters --typescript --tailwind --app
+cd ufc-fighters
+export interface Fighter {
+  id: number
+  name: string
+  nickname: string
+  age: number
+  country: string
+  weightClass: string
+  record: string
+  wins: number
+  losses: number
+  draws: number
+  height: string
+  reach: string
+  stance: string
+  status: 'champion' | 'top5' | 'top15' | 'rising'
+  image: string
+  debut: string
+  team: string
+}
 
-Copyright (c) 2026 Anton34-wq
+export interface Fight {
+  id: number
+  fighter1Id: number
+  fighter2Id: number
+  fighter1Name: string
+  fighter2Name: string
+  event: string
+  date: string
+  result: 'win' | 'loss' | 'draw'
+  method: 'KO/TKO' | 'Submission' | 'Decision' | 'Draw'
+  round: number
+  time: string
+  bonus?: string
+}
+import { Fighter } from '@/types'
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+export const fighters: Fighter[] = [
+  {
+    id: 1,
+    name: 'Ислам Махачев',
+    nickname: 'Махач',
+    age: 32,
+    country: 'Россия',
+    weightClass: 'Легкий вес',
+    record: '25-1-0',
+    wins: 25,
+    losses: 1,
+    draws: 0,
+    height: '178 см',
+    reach: '179 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/makhachev.jpg',
+    debut: '2015',
+    team: 'Eagles MMA'
+  },
+  {
+    id: 2,
+    name: 'Хабиб Нурмагомедов',
+    nickname: 'Орел',
+    age: 35,
+    country: 'Россия',
+    weightClass: 'Легкий вес',
+    record: '29-0-0',
+    wins: 29,
+    losses: 0,
+    draws: 0,
+    height: '178 см',
+    reach: '178 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/khabib.jpg',
+    debut: '2012',
+    team: 'Eagles MMA'
+  },
+  {
+    id: 3,
+    name: 'Конор Макгрегор',
+    nickname: 'The Notorious',
+    age: 35,
+    country: 'Ирландия',
+    weightClass: 'Полулегкий вес',
+    record: '22-6-0',
+    wins: 22,
+    losses: 6,
+    draws: 0,
+    height: '175 см',
+    reach: '188 см',
+    stance: 'Левша',
+    status: 'top15',
+    image: '/fighters/conor.jpg',
+    debut: '2013',
+    team: 'SBG Ireland'
+  },
+  {
+    id: 4,
+    name: 'Джон Джонс',
+    nickname: 'Bones',
+    age: 36,
+    country: 'США',
+    weightClass: 'Тяжелый вес',
+    record: '27-1-0',
+    wins: 27,
+    losses: 1,
+    draws: 0,
+    height: '193 см',
+    reach: '215 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/jones.jpg',
+    debut: '2008',
+    team: 'Jackson-Wink'
+  },
+  {
+    id: 5,
+    name: 'Фрэнсис Нганну',
+    nickname: 'The Predator',
+    age: 37,
+    country: 'Камерун',
+    weightClass: 'Тяжелый вес',
+    record: '17-3-0',
+    wins: 17,
+    losses: 3,
+    draws: 0,
+    height: '193 см',
+    reach: '211 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/ngannou.jpg',
+    debut: '2015',
+    team: 'Xtreme Couture'
+  },
+  {
+    id: 6,
+    name: 'Александр Волкановски',
+    nickname: 'The Great',
+    age: 35,
+    country: 'Австралия',
+    weightClass: 'Полулегкий вес',
+    record: '26-3-0',
+    wins: 26,
+    losses: 3,
+    draws: 0,
+    height: '168 см',
+    reach: '183 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/volkanovski.jpg',
+    debut: '2016',
+    team: 'Freestyle MMA'
+  },
+  {
+    id: 7,
+    name: 'Исраэль Адесанья',
+    nickname: 'The Last Stylebender',
+    age: 34,
+    country: 'Новая Зеландия',
+    weightClass: 'Средний вес',
+    record: '24-3-0',
+    wins: 24,
+    losses: 3,
+    draws: 0,
+    height: '193 см',
+    reach: '203 см',
+    stance: 'Правша',
+    status: 'top5',
+    image: '/fighters/adesanya.jpg',
+    debut: '2018',
+    team: 'City Kickboxing'
+  },
+  {
+    id: 8,
+    name: 'Хамзат Чимаев',
+    nickname: 'Borz',
+    age: 29,
+    country: 'ОАЭ',
+    weightClass: 'Полусредний вес',
+    record: '13-0-0',
+    wins: 13,
+    losses: 0,
+    draws: 0,
+    height: '188 см',
+    reach: '190 см',
+    stance: 'Правша',
+    status: 'top5',
+    image: '/fighters/chimaev.jpg',
+    debut: '2020',
+    team: 'Allstars Training Center'
+  },
+  {
+    id: 9,
+    name: 'Шавкат Рахмонов',
+    nickname: 'Nomad',
+    age: 29,
+    country: 'Казахстан',
+    weightClass: 'Полусредний вес',
+    record: '18-0-0',
+    wins: 18,
+    losses: 0,
+    draws: 0,
+    height: '185 см',
+    reach: '196 см',
+    stance: 'Правша',
+    status: 'top5',
+    image: '/fighters/rakhmonov.jpg',
+    debut: '2020',
+    team: 'Dar Team'
+  },
+  {
+    id: 10,
+    name: 'Илия Топурия',
+    nickname: 'El Matador',
+    age: 27,
+    country: 'Грузия',
+    weightClass: 'Полулегкий вес',
+    record: '15-0-0',
+    wins: 15,
+    losses: 0,
+    draws: 0,
+    height: '170 см',
+    reach: '175 см',
+    stance: 'Правша',
+    status: 'champion',
+    image: '/fighters/topuria.jpg',
+    debut: '2020',
+    team: 'Climent Club'
+  },
+  {
+    id: 11,
+    name: 'Шарабутдин Магомедов',
+    nickname: 'Шара Буллет',
+    age: 29,
+    country: 'Россия',
+    weightClass: 'Средний вес',
+    record: '13-0-0',
+    wins: 13,
+    losses: 0,
+    draws: 0,
+    height: '188 см',
+    reach: '196 см',
+    stance: 'Правша',
+    status: 'rising',
+    image: '/fighters/sharabullet.jpg',
+    debut: '2023',
+    team: 'Gorets'
+  },
+  {
+    id: 12,
+    name: 'Умар Нурмагомедов',
+    nickname: 'Умар',
+    age: 28,
+    country: 'Россия',
+    weightClass: 'Легчайший вес',
+    record: '17-0-0',
+    wins: 17,
+    losses: 0,
+    draws: 0,
+    height: '170 см',
+    reach: '175 см',
+    stance: 'Правша',
+    status: 'top5',
+    image: '/fighters/umar.jpg',
+    debut: '2021',
+    team: 'Eagles MMA'
+  }
+]
+'use client'
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
+import { Menu, X, Sun, Moon, Heart } from 'lucide-react'
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [favoritesCount, setFavoritesCount] = useState(0)
+
+  useEffect(() => {
+    setMounted(true)
+    const updateFavoritesCount = () => {
+      const favs = JSON.parse(localStorage.getItem('favorites') || '[]')
+      setFavoritesCount(favs.length)
+    }
+    updateFavoritesCount()
+    window.addEventListener('favoritesUpdated', updateFavoritesCount)
+    return () => window.removeEventListener('favoritesUpdated', updateFavoritesCount)
+  }, [])
+
+  if (!mounted) return null
+
+  const navItems = [
+    { name: 'Главная', href: '/' },
+    { name: 'Бойцы', href: '/fighters' },
+    { name: 'Рейтинги', href: '/rankings' },
+    { name: 'Сравнение', href: '/compare' }
+  ]
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Логотип */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+              UFC Fighters
+            </span>
+          </Link>
+
+          {/* Десктоп навигация */}
+          <nav className="hidden md:flex space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Правая часть */}
+          <div className="flex items-center space-x-4">
+            {/* Избранное */}
+            <Link
+              href="/favorites"
+              className="relative p-2 text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500"
+            >
+              <Heart className="w-5 h-5" />
+              {favoritesCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {favoritesCount}
+                </span>
+              )}
+            </Link>
+
+            {/* Тема */}
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            {/* Мобильное меню кнопка */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 text-gray-700 dark:text-gray-300"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Мобильное меню */}
+      {isOpen && (
+        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+          <div className="px-4 py-2 space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block py-2 text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  )
+}
+'use client'
+
+import { Fighter } from '@/types'
+import Link from 'next/link'
+import { Heart } from 'lucide-react'
+import { useState, useEffect } from 'react'
+
+interface Props {
+  fighter: Fighter
+}
+
+export default function FighterCard({ fighter }: Props) {
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    setIsFavorite(favorites.includes(fighter.id))
+  }, [fighter.id])
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    let newFavorites
+    
+    if (favorites.includes(fighter.id)) {
+      newFavorites = favorites.filter((id: number) => id !== fighter.id)
+    } else {
+      newFavorites = [...favorites, fighter.id]
+    }
+    
+    localStorage.setItem('favorites', JSON.stringify(newFavorites))
+    setIsFavorite(!isFavorite)
+    window.dispatchEvent(new Event('favoritesUpdated'))
+  }
+
+  const getStatusBadge = () => {
+    switch (fighter.status) {
+      case 'champion':
+        return <span className="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded">ЧЕМПИОН</span>
+      case 'top5':
+        return <span className="px-2 py-1 bg-red-600 text-white text-xs font-bold rounded">ТОП-5</span>
+      case 'top15':
+        return <span className="px-2 py-1 bg-blue-600 text-white text-xs font-bold rounded">ТОП-15</span>
+      case 'rising':
+        return <span className="px-2 py-1 bg-green-600 text-white text-xs font-bold rounded">ВОСХОДЯЩИЙ</span>
+      default:
+        return null
+    }
+  }
+
+  return (
+    <Link href={`/fighter/${fighter.id}`}>
+      <div className="group relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        {/* Фото */}
+        <div className="relative h-64 overflow-hidden bg-gray-200 dark:bg-gray-700">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+          <div className="w-full h-full flex items-center justify-center text-gray-500">
+            {/* Заглушка для фото */}
+            <span className="text-6xl">🥋</span>
+          </div>
+          
+          {/* Статус */}
+          <div className="absolute top-2 left-2">
+            {getStatusBadge()}
+          </div>
+          
+          {/* Избранное */}
+          <button
+            onClick={toggleFavorite}
+            className="absolute top-2 right-2 p-2 bg-white dark:bg-gray-900 rounded-full shadow-lg hover:scale-110 transition-transform"
+          >
+            <Heart
+              className={`w-5 h-5 ${
+                isFavorite ? 'fill-red-600 text-red-600' : 'text-gray-600 dark:text-gray-400'
+              }`}
+            />
+          </button>
+          
+          {/* Имя на фото */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+            <h3 className="text-xl font-bold">{fighter.name}</h3>
+            <p className="text-sm opacity-90">"{fighter.nickname}"</p>
+          </div>
+        </div>
+        
+        {/* Инфо */}
+        <div className="p-4 space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm">
+              {fighter.weightClass}
+            </span>
+            <span className="text-lg font-bold text-red-600">
+              {fighter.record}
+            </span>
+          </div>
+          
+          <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+            <span>{fighter.country}</span>
+            <span>•</span>
+            <span>{fighter.age} лет</span>
+            <span>•</span>
+            <span>{fighter.team}</span>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+            <div className="text-center">
+              <div className="text-xs text-gray-500">Рост</div>
+              <div className="font-semibold">{fighter.height}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xs text-gray-500">Размах</div>
+              <div className="font-semibold">{fighter.reach}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-xs text-gray-500">Стойка</div>
+              <div className="font-semibold">{fighter.stance}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  )
+}
+'use client'
+
+import { useState } from 'react'
+import { Search, SlidersHorizontal, X } from 'lucide-react'
+
+interface Props {
+  onFilterChange: (filters: any) => void
+}
+
+const weightClasses = [
+  'Все',
+  'Легкий вес',
+  'Полулегкий вес',
+  'Тяжелый вес',
+  'Средний вес',
+  'Полусредний вес',
+  'Легчайший вес'
+]
+
+const statuses = [
+  'Все',
+  'champion',
+  'top5',
+  'top15',
+  'rising'
+]
+
+const countries = [
+  'Все',
+  'Россия',
+  'США',
+  'Ирландия',
+  'Камерун',
+  'Австралия',
+  'Новая Зеландия',
+  'ОАЭ',
+  'Казахстан',
+  'Грузия'
+]
+
+export default function FighterFilters({ onFilterChange }: Props) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [weightClass, setWeightClass] = useState('Все')
+  const [status, setStatus] = useState('Все')
+  const [country, setCountry] = useState('Все')
+
+  const applyFilters = () => {
+    onFilterChange({
+      search,
+      weightClass: weightClass === 'Все' ? '' : weightClass,
+      status: status === 'Все' ? '' : status,
+      country: country === 'Все' ? '' : country
+    })
+  }
+
+  const clearFilters = () => {
+    setSearch('')
+    setWeightClass('Все')
+    setStatus('Все')
+    setCountry('Все')
+    onFilterChange({
+      search: '',
+      weightClass: '',
+      status: '',
+      country: ''
+    })
+  }
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 mb-8">
+      {/* Поиск */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          type="text"
+          placeholder="Поиск по имени или прозвищу..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyUp={(e) => e.key === 'Enter' && applyFilters()}
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
+        />
+      </div>
+
+      {/* Кнопки управления */}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          <span>Фильтры</span>
+        </button>
+        
+        <div className="flex space-x-2">
+          <button
+            onClick={applyFilters}
+            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          >
+            Применить
+          </button>
+          <button
+            onClick={clearFilters}
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Фильтры */}
+      {isOpen && (
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Весовая категория */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Весовая категория
+              </label>
+              <select
+                value={weightClass}
+                onChange={(e) => setWeightClass(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {weightClasses.map((wc) => (
+                  <option key={wc} value={wc}>{wc}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Статус */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Статус
+              </label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {statuses.map((s) => (
+                  <option key={s} value={s}>
+                    {s === 'Все' ? 'Все' : 
+                     s === 'champion' ? 'Чемпионы' :
+                     s === 'top5' ? 'Топ-5' :
+                     s === 'top15' ? 'Топ-15' : 'Восходящие'}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Страна */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Страна
+              </label>
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {countries.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+import { fighters } from '@/data/fighters'
+import FighterCard from '@/components/Fighters/FighterCard'
+import Link from 'next/link'
+import { Trophy, TrendingUp, Award, ChevronRight } from 'lucide-react'
+
+export default function HomePage() {
+  const champions = fighters.filter(f => f.status === 'champion')
+  const rising = fighters.filter(f => f.status === 'rising')
+  const topFighters = fighters.slice(0, 4)
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
+      {/* Герой-секция */}
+      <div className="bg-gradient-to-r from-red-900 to-red-700 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-5xl font-bold mb-4">UFC Fighters Database</h1>
+            <p className="text-xl mb-8 opacity-90">Полная энциклопедия бойцов UFC</p>
+            <Link
+              href="/fighters"
+              className="inline-flex items-center px-8 py-3 bg-white text-red-600 rounded-lg font-bold hover:bg-gray-100 transition-colors"
+            >
+              Смотреть бойцов
+              <ChevronRight className="ml-2 w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Топ бойцы */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-2">
+            <Trophy className="w-6 h-6 text-red-600" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Лучшие бойцы</h2>
+          </div>
+          <Link href="/fighters" className="text-red-600 hover:text-red-700 flex items-center">
+            Все бойцы <ChevronRight className="ml-1 w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {topFighters.map((fighter) => (
+            <FighterCard key={fighter.id} fighter={fighter} />
+          ))}
+        </div>
+      </div>
+
+      {/* Чемпионы */}
+      <div className="bg-white dark:bg-gray-800 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center space-x-2 mb-8">
+            <Award className="w-6 h-6 text-yellow-500" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Действующие чемпионы</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {champions.slice(0, 4).map((fighter) => (
+              <FighterCard key={fighter.id} fighter={fighter} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Восходящие звезды */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex items-center space-x-2 mb-8">
+          <TrendingUp className="w-6 h-6 text-green-600" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Восходящие звезды</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {rising.map((fighter) => (
+            <FighterCard key={fighter.id} fighter={fighter} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+'use client'
+
+import { useState } from 'react'
+import { fighters } from '@/data/fighters'
+import FighterCard from '@/components/Fighters/FighterCard'
+import FighterFilters from '@/components/Fighters/FighterFilters'
+import { Grid, Rows } from 'lucide-react'
+
+export default function FightersPage() {
+  const [filteredFighters, setFilteredFighters] = useState(fighters)
+  const [view, setView] = useState<'grid' | 'list'>('grid')
+
+  const handleFilterChange = (filters: any) => {
+    let filtered = [...fighters]
+
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase()
+      filtered = filtered.filter(f => 
+        f.name.toLowerCase().includes(searchLower) ||
+        f.nickname.toLowerCase().includes(searchLower)
+      )
+    }
+
+    if (filters.weightClass) {
+      filtered = filtered.filter(f => f.weightClass === filters.weightClass)
+    }
+
+    if (filters.status) {
+      filtered = filtered.filter(f => f.status === filters.status)
+    }
+
+    if (filters.country) {
+      filtered = filtered.filter(f => f.country === filters.country)
+    }
+
+    setFilteredFighters(filtered)
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Заголовок */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Бойцы UFC
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Найдено {filteredFighters.length} бойцов
+          </p>
+        </div>
+
+        {/* Фильтры */}
+        <FighterFilters onFilterChange={handleFilterChange} />
+
+        {/* Вид отображения */}
+        <div className="flex justify-end mb-6">
+          <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-lg p-1">
+            <button
+              onClick={() => setView('grid')}
+              className={`p-2 rounded ${
+                view === 'grid'
+                  ? 'bg-red-600 text-white'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <Grid className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setView('list')}
+              className={`p-2 rounded ${
+                view === 'list'
+                  ? 'bg-red-600 text-white'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              <Rows className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Сетка бойцов */}
+        {filteredFighters.length > 0 ? (
+          <div className={
+            view === 'grid'
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+              : 'space-y-4'
+          }>
+            {filteredFighters.map((fighter) => (
+              <FighterCard key={fighter.id} fighter={fighter} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-xl text-gray-500 dark:text-gray-400">
+              Бойцы не найдены
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { fighters } from '@/data/fighters'
+import { fights } from '@/data/fights'
+import { Fighter, Fight } from '@/types'
+import { Heart, Calendar, Flag, Ruler, Target, Award, Trophy, TrendingUp, Activity } from 'lucide-react'
+import Link from 'next/link'
+
+export default function FighterPage() {
+  const { id } = useParams()
+  const [fighter, setFighter] = useState<Fighter | null>(null)
+  const [fighterFights, setFighterFights] = useState<Fight[]>([])
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  useEffect(() => {
+    const fighterId = Number(id)
+    const found = fighters.find(f => f.id === fighterId)
+    setFighter(found || null)
+    
+    if (found) {
+      const ffs = fights.filter(f => f.fighter1Id === fighterId || f.fighter2Id === fighterId)
+      setFighterFights(ffs)
+    }
+
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    setIsFavorite(favorites.includes(fighterId))
+  }, [id])
+
+  const toggleFavorite = () => {
+    if (!fighter) return
+    
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    let newFavorites
+    
+    if (favorites.includes(fighter.id)) {
+      newFavorites = favorites.filter((fid: number) => fid !== fighter.id)
+    } else {
+      newFavorites = [...favorites, fighter.id]
+    }
+    
+    localStorage.setItem('favorites', JSON.stringify(newFavorites))
+    setIsFavorite(!isFavorite)
+    window.dispatchEvent(new Event('favoritesUpdated'))
+  }
+
+  if (!fighter) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🥋</div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Боец не найден
+          </h1>
+          <Link href="/fighters" className="text-red-600 hover:text-red-700">
+            Вернуться к списку
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const getMethodColor = (method: string) => {
+    switch (method) {
+      case 'KO/TKO': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+      case 'Submission': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+      case 'Decision': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
+      {/* Герой-секция с фоном */}
+      <div className="relative bg-gradient-to-r from-red-900 to-red-700 text-white py-16">
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+            {/* Фото */}
+            <div className="w-48 h-48 bg-white/10 rounded-full flex items-center justify-center text-7xl">
+              🥋
+            </div>
+            
+            {/* Информация */}
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-between mb-4">
+                <div>
+                  <h1 className="text-4xl md:text-5xl font-bold mb-2">{fighter.name}</h1>
+                  <p className="text-2xl opacity-90">"{fighter.nickname}"</p>
+                </div>
+                <button
+                  onClick={toggleFavorite}
+                  className="hidden md:block p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <Heart className={`w-6 h-6 ${isFavorite ? 'fill-white' : ''}`} />
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-sm opacity-75">Рекорд</div>
+                  <div className="text-2xl font-bold">{fighter.record}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-sm opacity-75">Возраст</div>
+                  <div className="text-2xl font-bold">{fighter.age}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-sm opacity-75">Весовая</div>
+                  <div className="text-2xl font-bold">{fighter.weightClass}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-sm opacity-75">Дебют</div>
+                  <div className="text-2xl font-bold">{fighter.debut}</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-center md:justify-start space-x-4">
+                <span className="px-4 py-2 bg-white/10 rounded-full text-sm">
+                  {fighter.country}
+                </span>
+                <span className="px-4 py-2 bg-white/10 rounded-full text-sm">
+                  {fighter.team}
+                </span>
+                <span className="px-4 py-2 bg-white/10 rounded-full text-sm">
+                  {fighter.stance}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Основной контент */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Левая колонка - статистика */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Физические данные */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <Activity className="w-5 h-5 mr-2 text-red-600" />
+                Физические данные
+              </h2>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Рост</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{fighter.height}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Размах рук</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{fighter.reach}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Стойка</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{fighter.stance}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Карьера */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <Trophy className="w-5 h-5 mr-2 text-red-600" />
+                Карьера
+              </h2>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Дебют в UFC</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{fighter.debut}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Команда</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{fighter.team}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">Всего боёв</span>
+                  <span className="font-bold text-gray-900 dark:text-white">
+                    {fighter.wins + fighter.losses + fighter.draws}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Статистика побед */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                <TrendingUp className="w-5 h-5 mr-2 text-red-600" />
+                Статистика побед
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-gray-600 dark:text-gray-400">Победы</span>
+                    <span className="font-bold text-green-600">{fighter.wins}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div className="bg-green-600 h-2.5 rounded-full" style={{ width: `${(fighter.wins / (fighter.wins + fighter.losses)) * 100}%` }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-gray-600 dark:text-gray-400">Поражения</span>
+                    <span className="font-bold text-red-600">{fighter.losses}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div className="bg-red-600 h-2.5 rounded-full" style={{ width: `${(fighter.losses / (fighter.wins + fighter.losses)) * 100}%` }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Правая колонка - история боёв */}
+          <div className="lg:col-span-2">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                <Calendar className="w-5 h-5 mr-2 text-red-600" />
+                История боёв
+              </h2>
+              
+              <div className="space-y-4">
+                {fighterFights.map((fight) => {
+                  const isWinner = 
+                    (fight.fighter1Id === fighter.id && fight.result === 'win') ||
+                    (fight.fighter2Id === fighter.id && fight.result === 'loss')
+                  
+                  const opponentName = fight.fighter1Id === fighter.id 
+                    ? fight.fighter2Name 
+                    : fight.fighter1Name
+
+                  return (
+                    <div key={fight.id} className="border-b border-gray-200 dark:border-gray-700 last:border-0 pb-4 last:pb-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-gray-500">{fight.event}</span>
+                        <span className="text-sm text-gray-500">{fight.date}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                            isWinner ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                          }`}>
+                            {isWinner ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}
+                          </span>
+                          <span className="font-medium text-gray-900 dark:text-white">
+                            vs {opponentName}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-2 py-1 rounded text-xs ${getMethodColor(fight.method)}`}>
+                            {fight.method}
+                          </span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            {fight.round} раунд, {fight.time}
+                          </span>
+                        </div>
+                      </div>
+                      {fight.bonus && (
+                        <div className="mt-2">
+                          <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 rounded text-xs">
+                            <Award className="w-3 h-3 mr-1" />
+                            {fight.bonus}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+'use client'
+
+import { useState, useEffect } from 'react'
+import { fighters } from '@/data/fighters'
+import FighterCard from '@/components/Fighters/FighterCard'
+import { Heart } from 'lucide-react'
+import Link from 'next/link'
+
+export default function FavoritesPage() {
+  const [favoriteFighters, setFavoriteFighters] = useState<any[]>([])
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    const favFighters = fighters.filter(f => favorites.includes(f.id))
+    setFavoriteFighters(favFighters)
+
+    const handleFavoritesUpdate = () => {
+      const updated = JSON.parse(localStorage.getItem('favorites') || '[]')
+      const updatedFighters = fighters.filter(f => updated.includes(f.id))
+      setFavoriteFighters(updatedFighters)
+    }
+
+    window.addEventListener('favoritesUpdated', handleFavoritesUpdate)
+    return () => window.removeEventListener('favoritesUpdated', handleFavoritesUpdate)
+  }, [])
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Заголовок */}
+        <div className="flex items-center space-x-3 mb-8">
+          <Heart className="w-8 h-8 text-red-600 fill-current" />
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Избранные бойцы
+          </h1>
+        </div>
+
+        {favoriteFighters.length > 0 ? (
+          <>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Вы добавили {favoriteFighters.length} бойцов в избранное
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {favoriteFighters.map((fighter) => (
+                <FighterCard key={fighter.id} fighter={fighter} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <div className="text-7xl mb-4">❤️</div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              У вас нет избранных бойцов
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-8">
+              Добавляйте бойцов в избранное, чтобы следить за их карьерой
+            </p>
+            <Link
+              href="/fighters"
+              className="inline-flex px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors"
+            >
+              Перейти к списку бойцов
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+'use client'
+
+import { ThemeProvider } from 'next-themes'
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      {children}
+    </ThemeProvider>
+  )
+}
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { Providers } from './providers'
+import Header from '@/components/Layout/Header'
+
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
+
+export const metadata: Metadata = {
+  title: 'UFC Fighters - Энциклопедия бойцов',
+  description: 'База данных бойцов UFC: статистика, история боёв, рейтинги',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="ru" suppressHydrationWarning>
+      <body className={inter.className}>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+        </Providers>
+      </body>
+    </html>
+  )
+}
+npm install next-themes lucide-react
+npm install -D @types/node
